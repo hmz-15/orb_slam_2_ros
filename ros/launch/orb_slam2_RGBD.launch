@@ -3,7 +3,7 @@
   <arg name="sequence" default="TUM1" />
   <arg name="localize_only" default="false" />
   <arg name="load_map" default="false" />
-  <arg name="map_file" default="VCLA3878.bin" />
+  <arg name="map_file" default="map.bin" />
   <arg name="camera_frame_id" default="camera_link" />
   <arg name="camera_frame_GT_id" default="openni_rgb_optical_frame" />
   <arg name="GT_available" default="true" />  
