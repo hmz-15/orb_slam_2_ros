@@ -5,6 +5,57 @@
 - Add support for customized world frame
 - Replace dependencies with build-in catkin packages
 
+# Usage
+We have tested the library in **Ubuntu 16.04** with **ROS Kinetic** and **Ubuntu 18.04** with **ROS Melodic**. A powerful computer (e.g. i7) will ensure real-time performance and provide more stable and accurate results.
+A C++11 compiler is needed.
+
+## Getting the code
+Clone the repository into your catkin workspace:
+```
+git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
+```
+
+## ROS
+This ROS node requires catkin_make_isolated or catkin build to build. This package depends on a number of other ROS packages which ship with the default installation of ROS.
+If they are not installed use [rosdep](http://wiki.ros.org/rosdep) to install them. In your catkin folder run
+```
+sudo rosdep init
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+```
+to install all dependencies for all packages. If you already initialized rosdep you get a warning which you can ignore.
+
+## Obtain dependencies
+The package requires Eigen (at least 3.1.0) and Opencv (3 or < 4.2). We provide catkin packages using wstool:
+```
+cd <your-ros-ws>
+wstool init src
+cd src
+wstool merge -t . orb_slam2_ros/orb_slam2_ros_https.rosinstall
+wstool update
+```
+
+## Building
+To build the node run
+```
+catkin build orb_slam2_ros
+source devel/setup.bash
+```
+in your catkin folder.
+
+## Run
+For RGBD SLAM:
+- Add a camera setting file in orb_slam2/config/, fill in the parameters
+- Adapt the arguments in ros/launch/orb_slam2_RGBD.launch (topic names, running modes...)
+- Launch the node and play a rosbag
+```
+roslaunch orb_slam2_ros orb_slam2_RGBD.launch
+rosbag play xxx.bag
+
+```
+
+---
+
 **ORB-SLAM2 Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2)).
 The original implementation can be found [here](https://github.com/raulmur/ORB_SLAM2.git).
 
@@ -58,42 +109,7 @@ if you use ORB-SLAM2 (Stereo or RGB-D) in an academic work, please cite:
       year={2017}
      }
 
-# 2. Building orb_slam2_ros
-We have tested the library in **Ubuntu 16.04** with **ROS Kinetic** and **Ubuntu 18.04** with **ROS Melodic**. A powerful computer (e.g. i7) will ensure real-time performance and provide more stable and accurate results.
-A C++11 compiler is needed.
-
-## Getting the code
-Clone the repository into your catkin workspace:
-```
-git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
-```
-
-## ROS
-This ROS node requires catkin_make_isolated or catkin build to build. This package depends on a number of other ROS packages which ship with the default installation of ROS.
-If they are not installed use [rosdep](http://wiki.ros.org/rosdep) to install them. In your catkin folder run
-```
-sudo rosdep init
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
-```
-to install all dependencies for all packages. If you already initialized rosdep you get a warning which you can ignore.
-
-## Eigen3
-Required by g2o. Download and install instructions can be found [here](http://eigen.tuxfamily.org).
-Otherwise Eigen can be installed as a binary with:
-```
-sudo apt install libeigen3-dev
-```
-**Required at least Eigen 3.1.0**.
-
-## Building
-To build the node run
-```
-catkin build
-```
-in your catkin folder.
-
-# 3. Configuration
+# 2. Configuration
 ## Vocab file
 To run the algorithm expects both a vocabulary file (see the paper) which ships with this repository.
 
@@ -147,7 +163,7 @@ The following topics are being published and subscribed to by the nodes:
     - **image_right/image_color_rect** for corresponding images
     - **image_left/camera_info** for camera calibration (if `load_calibration_from_cam`) is `true`
 
-# 4. Services
+# 3. Services
 All nodes offer the possibility to save the map via the service node_type/save_map.
 So the save_map services are:
 - **/orb_slam2_rgbd/save_map**
@@ -158,11 +174,8 @@ The save_map service expects the name of the file the map should be saved at as 
 
 At the moment, while the save to file takes place, the SLAM is inactive.
 
-# 5. Run
-After sourcing your setup bash using
-```
-source devel/setup.bash
-```
+# 4. Run
+
 ## Suported cameras
 | Camera               | Mono                                                           | Stereo                                                           | RGBD                                                       |
 |----------------------|----------------------------------------------------------------|------------------------------------------------------------------|------------------------------------------------------------|
@@ -173,11 +186,11 @@ source devel/setup.bash
 
 Use the command from the corresponding cell for your camera to launch orb_slam2_ros with the right parameters for your setup.
 
-# 6. Docker
+# 5. Docker
 An easy way is to use orb_slam2_ros with Docker. This repository ships with a Dockerfile based on ROS kinetic.
 The container includes orb_slam2_ros as well as the Intel RealSense package for quick testing and data collection.
 
-# 7. FAQ
+# 6. FAQ
 Here are some answers to frequently asked questions.
 ### How to save the map
 To save the map with a simple command line command run one the commands (matching to your node running):
