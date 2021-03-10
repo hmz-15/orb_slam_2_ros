@@ -29,6 +29,7 @@
 #include <opencv2/core/core.hpp>
 
 #include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
@@ -67,13 +68,14 @@ class Node
 
   private:
     void PublishMapPoints (std::vector<ORB_SLAM2::MapPoint*> map_points);
-    void PublishPositionAsTransform (cv::Mat position);
+    tf2::Transform PublishPositionAsTransform (cv::Mat position);
     void PublishPositionAsPoseStamped(cv::Mat position);
     void PublishGBAStatus (bool gba_status);
     void PublishRenderedImage (cv::Mat image);
     void ParamsChangedCallback(orb_slam2_ros::dynamic_reconfigureConfig &config, uint32_t level);
     bool SaveMapSrv (orb_slam2_ros::SaveMap::Request &req, orb_slam2_ros::SaveMap::Response &res);
-    void LoadOrbParameters (ORB_SLAM2::ORBParameters& parameters);
+    void LoadOrbParameters (const string &strSettingPath, ORB_SLAM2::ORBParameters& parameters);
+    void ReadCalibrationfromFile(const string &strSettingPath, ORB_SLAM2::ORBParameters& parameters);
 
     // initialization Transform listener
     boost::shared_ptr<tf2_ros::Buffer> tfBuffer;
@@ -81,7 +83,12 @@ class Node
 
     tf2::Transform TransformFromMat (cv::Mat position_mat);
     tf2::Transform TransformToTarget (tf2::Transform tf_in, std::string frame_in, std::string frame_target);
+    tf2::Transform GetGTPose (std::string from_frame, std::string to_frame);
     sensor_msgs::PointCloud2 MapPointsToPointCloud (std::vector<ORB_SLAM2::MapPoint*> map_points);
+
+    tf2::Transform world_to_map_;
+    geometry_msgs::TransformStamped world_to_map_msg_;
+    tf2_ros::StaticTransformBroadcaster tf_static_broadcaster_;
 
     dynamic_reconfigure::Server<orb_slam2_ros::dynamic_reconfigureConfig> dynamic_param_server_;
 
@@ -101,13 +108,20 @@ class Node
     std::string map_frame_id_param_;
     std::string camera_frame_id_param_;
     std::string target_frame_id_param_;
+    std::string world_frame_id_param_;
+    std::string camera_frame_GT_id_param_;
     std::string map_file_name_param_;
     std::string voc_file_name_param_;
+    std::string settings_file_name_param_;
     bool load_map_param_;
     bool publish_pointcloud_param_;
     bool publish_tf_param_;
     bool publish_pose_param_;
     int min_observations_per_point_;
+
+    bool init_step_;
+    double init_height_;
+    bool if_GT_available_;
 };
 
 #endif //ORBSLAM2_ROS_NODE_H_

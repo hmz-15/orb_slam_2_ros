@@ -58,7 +58,7 @@ struct ORBParameters{
     bool RGB;
     float scaleFactor, depthMapFactor, thDepth;
     // camera parameters
-    float fx, fy, cx, cy, baseline;
+    float fx, fy, cx, cy, bf;
     float k1, k2, p1, p2, k3;
 };
 

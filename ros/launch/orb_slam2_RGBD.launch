@@ -1,0 +1,46 @@
+<launch>
+
+  <arg name="sequence" default="TUM1" />
+  <arg name="localize_only" default="false" />
+  <arg name="load_map" default="false" />
+  <arg name="map_file" default="VCLA3878.bin" />
+  <arg name="camera_frame_id" default="camera_link" />
+  <arg name="camera_frame_GT_id" default="openni_rgb_optical_frame" />
+  <arg name="GT_available" default="true" />  
+  <!-- <arg name="rgb_raw_topic" default="/perception/rgb_image" />
+  <arg name="depth_raw_topic" default="/perception/depth_image" /> -->
+  <arg name="rgb_raw_topic" default="/camera/rgb/image_color" />
+  <arg name="depth_raw_topic" default="/camera/depth/image" />
+  <arg name="camera_info_topic" default="/camera/rgb/camera_info" />
+
+  <node name="orb_slam2_rgbd" pkg="orb_slam2_ros" type="orb_slam2_ros_rgbd" output="screen">
+       
+       <remap from="camera/depth_registered/image_raw"     to="$(arg depth_raw_topic)" />
+       <remap from="camera/rgb/image_raw"                  to="$(arg rgb_raw_topic)" />
+       <remap from="camera/rgb/camera_info"                to="$(arg camera_info_topic)" />
+
+       <param name="load_calibration_from_cam" type="bool" value="false" />
+       
+       <param name="publish_pointcloud" type="bool" value="true" />
+       <param name="publish_pose" type="bool" value="true" />
+       <param name="localize_only" type="bool" value="$(arg localize_only)" />
+       <param name="reset_map" type="bool" value="false" />
+
+       <!-- static parameters -->
+       <param name="load_map" type="bool" value="$(arg load_map)" />
+       <param name="map_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/map/$(arg map_file)" />
+       <param name="voc_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt" />
+       <param name="settings_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/config/$(arg sequence).yaml" />
+
+       <param name="pointcloud_frame_id" type="string" value="map" />
+       <param name="GT_world_frame_id" type="string" value="world" />
+       <param name="camera_frame_id" type="string" value="$(arg camera_frame_id)" />
+       <param name="camera_frame_GT_id" type="string" value="$(arg camera_frame_GT_id)" />
+       <param name="min_num_kf_in_map" type="int" value="5" />
+
+       <param name="GT_available" type="bool" value="$(arg GT_available)" />  
+       <param name="init_height" type="double" value="0.99" />
+       
+
+  </node>
+</launch>

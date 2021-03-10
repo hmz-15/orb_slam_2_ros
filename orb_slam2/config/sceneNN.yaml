@@ -1,41 +1,42 @@
 %YAML:1.0
 
-# Camera calibration and distortion parameters (OpenCV)
-Camera.fx: 520.9
-Camera.fy: 521.0
-Camera.cx: 325.1
-Camera.cy: 249.7
+# Camera calibration parameters (OpenCV)
+Camera.fx: 544.47329
+Camera.fy: 544.47329
+Camera.cx: 320.0
+Camera.cy: 240.0
 
-Camera.k1: 0.2312
-Camera.k2: -0.7849
-Camera.p1: -0.0033
-Camera.p2: -0.0001
-Camera.k3: 0.9172
+# Camera distortion paremeters (OpenCV) --
+Camera.k1: 0.0
+Camera.k2: 0.0
+Camera.p1: 0.0
+Camera.p2: 0.0
+Camera.k3: 0.0
 
 Camera.width: 640
 Camera.height: 480
 
-# Camera frames per second
-Camera.fps: 25.0
-
 # IR projector baseline times fx (aprox.)
-Camera.bf: 40.0
+Camera.bf: 40
+
+# Camera frames per second
+Camera.fps: 30
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
-Camera.RGB: 1
+Camera.RGB: 0
 
 # Close/Far threshold. Baseline times.
 ThDepth: 40.0
 
 # Deptmap values factor
-DepthMapFactor: 1.031
+DepthMapFactor: 1000
 
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
 
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 1000
+ORBextractor.nFeatures: 1200
 
 # ORB Extractor: Scale factor between levels in the scale pyramid
 ORBextractor.scaleFactor: 1.2
