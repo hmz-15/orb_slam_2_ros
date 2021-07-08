@@ -26,7 +26,7 @@ rosdep install --from-paths src --ignore-src -r -y
 to install all dependencies for all packages. If you already initialized rosdep you get a warning which you can ignore.
 
 ## Obtain dependencies
-The package requires Eigen (at least 3.1.0) and Opencv (3 or < 4.2). We provide catkin packages using wstool:
+The package requires Eigen (at least 3.1.0) and Opencv (3 or < 4.2). We provide catkin packages for Eigen using wstool:
 ```
 cd <your-ros-ws>
 wstool init src
