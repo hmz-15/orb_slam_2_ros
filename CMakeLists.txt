@@ -26,22 +26,19 @@ tf
 sensor_msgs
 dynamic_reconfigure
 message_generation
-opencv3_catkin
 eigen_catkin
 )
 
-# find_package(OpenCV 4.0 QUIET)
-# if(NOT OpenCV_FOUND)
-#    find_package(OpenCV 3.0 QUIET)
-#    if(NOT OpenCV_FOUND)
-#       find_package(OpenCV 2.4.3 QUIET)
-#       if(NOT OpenCV_FOUND)
-#          message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
-#      endif()
-#    endif()
-# endif()
-
-# find_package(Eigen3 3.1.0 REQUIRED)
+find_package(OpenCV 4.0 QUIET)
+if(NOT OpenCV_FOUND)
+   find_package(OpenCV 3.0 QUIET)
+   if(NOT OpenCV_FOUND)
+      find_package(OpenCV 2.4.3 QUIET)
+      if(NOT OpenCV_FOUND)
+         message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
+     endif()
+   endif()
+endif()
 
 set (DYNAMIC_RECONFIGURE_PATH ros/config/dynamic_reconfigure.cfg)
 execute_process(COMMAND chmod a+x ${DYNAMIC_RECONFIGURE_PATH}
@@ -55,15 +52,14 @@ generate_dynamic_reconfigure_options(
 )
 
 set(LIBS_ORBSLAM
-# ${OpenCV_LIBS}
-# ${EIGEN3_LIBS}
+${OpenCV_LIBS}
 ${PROJECT_SOURCE_DIR}/orb_slam2/Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/orb_slam2/Thirdparty/g2o/lib/libg2o.so
 )
 
 set(LIBS_ROS
 ${PROJECT_SOURCE_DIR}/orb_slam2/lib/lib${PROJECT_NAME}.so
-# ${OpenCV_LIBS}
+${OpenCV_LIBS}
 ${catkin_LIBRARIES}
 )
 
@@ -79,14 +75,13 @@ generate_messages(
 
 catkin_package (
   CATKIN_DEPENDS roscpp rospy std_msgs cv_bridge image_transport tf sensor_msgs dynamic_reconfigure message_runtime
-  LIBRARIES {PROJECT_NAME} libDBoW2 libg2o opencv3_catkin eigen_catkin
+  LIBRARIES {PROJECT_NAME} libDBoW2 libg2o eigen_catkin
 )
 
 include_directories(
 ${PROJECT_SOURCE_DIR}/orb_slam2
 ${PROJECT_SOURCE_DIR}/orb_slam2/include
 ${PROJECT_SOURCE_DIR}/ros/include
-# ${EIGEN3_INCLUDE_DIR}
 ${catkin_INCLUDE_DIRS}
 )
 
