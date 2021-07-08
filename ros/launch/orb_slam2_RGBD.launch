@@ -7,6 +7,7 @@
   <arg name="camera_frame_id" default="camera_link" />
   <arg name="camera_frame_GT_id" default="openni_rgb_optical_frame" />
   <arg name="GT_available" default="true" />  
+  <arg name="init_height" default="1.0" />  
   <!-- <arg name="rgb_raw_topic" default="/perception/rgb_image" />
   <arg name="depth_raw_topic" default="/perception/depth_image" /> -->
   <arg name="rgb_raw_topic" default="/camera/rgb/image_color" />
@@ -39,7 +40,7 @@
        <param name="min_num_kf_in_map" type="int" value="5" />
 
        <param name="GT_available" type="bool" value="$(arg GT_available)" />  
-       <param name="init_height" type="double" value="0.99" />
+       <param name="init_height" type="double" value="$(arg init_height)" />
        
 
   </node>
