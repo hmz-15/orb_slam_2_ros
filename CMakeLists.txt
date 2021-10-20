@@ -39,6 +39,11 @@ if(NOT OpenCV_FOUND)
      endif()
    endif()
 endif()
+<<<<<<< HEAD
+=======
+
+# find_package(Eigen3 3.1.0 REQUIRED)
+>>>>>>> to_merge
 
 set (DYNAMIC_RECONFIGURE_PATH ros/config/dynamic_reconfigure.cfg)
 execute_process(COMMAND chmod a+x ${DYNAMIC_RECONFIGURE_PATH}
@@ -53,6 +58,10 @@ generate_dynamic_reconfigure_options(
 
 set(LIBS_ORBSLAM
 ${OpenCV_LIBS}
+<<<<<<< HEAD
+=======
+# ${EIGEN3_LIBS}
+>>>>>>> to_merge
 ${PROJECT_SOURCE_DIR}/orb_slam2/Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/orb_slam2/Thirdparty/g2o/lib/libg2o.so
 )
