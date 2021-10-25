@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="sequence" default="TUM1" />
+  <arg name="dataset" default="sceneNN" />
   <arg name="localize_only" default="false" />
   <arg name="load_map" default="false" />
   <arg name="map_file" default="map.bin" />
@@ -8,8 +8,7 @@
   <arg name="camera_frame_GT_id" default="openni_rgb_optical_frame" />
   <arg name="GT_available" default="true" />  
   <arg name="init_height" default="1.0" />  
-  <!-- <arg name="rgb_raw_topic" default="/perception/rgb_image" />
-  <arg name="depth_raw_topic" default="/perception/depth_image" /> -->
+
   <arg name="rgb_raw_topic" default="/camera/rgb/image_color" />
   <arg name="depth_raw_topic" default="/camera/depth/image" />
   <arg name="camera_info_topic" default="/camera/rgb/camera_info" />
@@ -31,7 +30,7 @@
        <param name="load_map" type="bool" value="$(arg load_map)" />
        <param name="map_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/map/$(arg map_file)" />
        <param name="voc_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt" />
-       <param name="settings_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/config/$(arg sequence).yaml" />
+       <param name="settings_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/config/$(arg dataset).yaml" />
 
        <param name="pointcloud_frame_id" type="string" value="map" />
        <param name="GT_world_frame_id" type="string" value="world" />

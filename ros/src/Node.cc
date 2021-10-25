@@ -187,7 +187,7 @@ tf2::Transform Node::GetGTPose (std::string from_frame, std::string to_frame) {
   tf2::Stamped<tf2::Transform> transformStamped_temp;
   try {
     // Get the transform from camera to target
-    geometry_msgs::TransformStamped tf_msg = tfBuffer->lookupTransform(from_frame, to_frame, ros::Time(0));
+    geometry_msgs::TransformStamped tf_msg = tfBuffer->lookupTransform(from_frame, to_frame, ros::Time(0), ros::Duration(2.0));
     // Convert to tf2
     tf2::fromMsg(tf_msg, transformStamped_temp);
     tf.setBasis(transformStamped_temp.getBasis());
@@ -384,21 +384,21 @@ void Node::LoadOrbParameters (const string &strSettingPath, ORB_SLAM2::ORBParame
   ReadCalibrationfromFile(strSettingPath, parameters);
 
 
-  node_handle_.param(name_of_node_ + "/camera_fps", parameters.maxFrames, 30);
-  node_handle_.param(name_of_node_ + "/camera_rgb_encoding", parameters.RGB, true);
-  node_handle_.param(name_of_node_ + "/ORBextractor/nFeatures", parameters.nFeatures, 1200);
-  node_handle_.param(name_of_node_ + "/ORBextractor/scaleFactor", parameters.scaleFactor, static_cast<float>(1.2));
-  node_handle_.param(name_of_node_ + "/ORBextractor/nLevels", parameters.nLevels, 8);
-  node_handle_.param(name_of_node_ + "/ORBextractor/iniThFAST", parameters.iniThFAST, 20);
-  node_handle_.param(name_of_node_ + "/ORBextractor/minThFAST", parameters.minThFAST, 7);
+//   node_handle_.param(name_of_node_ + "/camera_fps", parameters.maxFrames, 30);
+//   node_handle_.param(name_of_node_ + "/camera_rgb_encoding", parameters.RGB, true);
+//   node_handle_.param(name_of_node_ + "/ORBextractor/nFeatures", parameters.nFeatures, 1200);
+//   node_handle_.param(name_of_node_ + "/ORBextractor/scaleFactor", parameters.scaleFactor, static_cast<float>(1.2));
+//   node_handle_.param(name_of_node_ + "/ORBextractor/nLevels", parameters.nLevels, 8);
+//   node_handle_.param(name_of_node_ + "/ORBextractor/iniThFAST", parameters.iniThFAST, 20);
+//   node_handle_.param(name_of_node_ + "/ORBextractor/minThFAST", parameters.minThFAST, 7);
 
   bool load_calibration_from_cam = false;
   node_handle_.param(name_of_node_ + "/load_calibration_from_cam", load_calibration_from_cam, false);
 
-  if (sensor_== ORB_SLAM2::System::STEREO || sensor_==ORB_SLAM2::System::RGBD) {
-    node_handle_.param(name_of_node_ + "/ThDepth", parameters.thDepth, static_cast<float>(35.0));
-    node_handle_.param(name_of_node_ + "/depth_map_factor", parameters.depthMapFactor, static_cast<float>(1.0));
-  }
+//   if (sensor_== ORB_SLAM2::System::STEREO || sensor_==ORB_SLAM2::System::RGBD) {
+//     node_handle_.param(name_of_node_ + "/ThDepth", parameters.thDepth, static_cast<float>(35.0));
+//     node_handle_.param(name_of_node_ + "/depth_map_factor", parameters.depthMapFactor, static_cast<float>(1.0));
+//   }
 
   if (load_calibration_from_cam) {
     ROS_INFO_STREAM ("Listening for camera info on topic " << node_handle_.resolveName(camera_info_topic_));
