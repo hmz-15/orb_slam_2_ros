@@ -28,7 +28,7 @@
 
        <!-- static parameters -->
        <param name="load_map" type="bool" value="$(arg load_map)" />
-       <param name="map_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/map/$(arg map_file)" />
+       <param name="map_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/$(arg map_file)" />
        <param name="voc_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt" />
        <param name="settings_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/config/$(arg dataset).yaml" />
 
