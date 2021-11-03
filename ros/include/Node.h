@@ -24,6 +24,7 @@
 #include <vector>
 #include <ros/ros.h>
 #include <ros/time.h>
+#include <ros/package.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/core/core.hpp>
